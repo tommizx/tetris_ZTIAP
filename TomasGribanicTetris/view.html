@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="Model/resetGame.js"></script>
+        <script src="View/view.js"></script>
+        <script src="controller/mouse.js"></script>
+        <script src="Model/mainMenu.js"></script>
+        <script src="Model/button.js"></script>
+        <script src="Model/sound.js"></script>
+        <script src="Model/settings.js"></script>
+        <script src="Model/game.js"></script>
+        <script src="Model/bloky.js"></script>
+        <script src="Model/gameOver.js"></script>
+        <script src="Model/howToPlay.js"></script>
+        <script src="Controller/keyboard.js"></script>
+        <script src="Model/grid.js"></script>
+        <script src="Model/score.js"></script>
+    </head>
+    <style>
+        #canvas1 {
+            border-style: solid;
+            border-width: 3px;
+            border-color: darkblue;
+            margin-left: 258px;
+            margin-top: 20px;
+        }
+        body {
+            background-color: antiquewhite;
+        }
+    </style>
+    <body>
+        <p><canvas id="canvas1" width="1000" height="600"></canvas></p>
+        <p id="cursorMove"></p>        
+        <script>
+            var canvas;
+            var ctx;
+            var requestForCancelFrameRefresh;
+            var music;
+            canvas = document.getElementById("canvas1");
+            ctx = canvas.getContext("2d");
+
+            var menuButtons =  [new Button(ctx,358,230,"START GAME","text"),
+                            new Button(ctx,390,410,"SETTINGS","text"),
+                            new Button(ctx,330,500,"LEADERBOARD","text"),
+                            new Button(ctx,350,320,"HOW TO PLAY","text")]
+
+            var settingsButtons =  [new Button(ctx,265,500,"BACK TO MAIN MENU","text"),
+                                    new Button(ctx,200,200,"HUDBA","img"),
+                                    new Button(ctx,200,300,"ZVUK","img")]
+                                    
+            var gameButtons =  [new Button(ctx,10,10,"BACKICON","img"),
+                                new Button(ctx,130,20,"SETTINGS ICON","img")]
+
+            var gameOverButtons =  [new Button(ctx,645,200,"PLAY AGAIN","img"),
+                                    new Button(ctx,635,300,"BACK TO MAIN MENU","img")]
+
+            var howToPlayButtons = [new Button(ctx,10,10,"BACKICON","img")]
+
+            var score = new Score(ctx);
+
+            var menu = new Menu(ctx);
+            var settings = new Settings(ctx);
+            var game = new Game(ctx);
+            var mapa = new Mapa(ctx);
+            var gameOver = new GameOver(ctx);
+            var howToPlay = new HowToPlay(ctx);
+            var scena = 1;
+            var polozeneBloky = [];
+
+            var fallingBlock;
+
+            music = new sound("Sound/music.mp3");
+            soundBlockPlace = new sound("Sound/blockPlaceSound.wav");
+            soundFullRow = new sound("Sound/fullRowSound.wav");
+
+            window.onload = function() {
+                requestAnimationFrame(mainLoop);
+            }
+        </script>
+    </body>
+</html>
